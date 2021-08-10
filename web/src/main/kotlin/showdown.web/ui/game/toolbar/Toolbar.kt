@@ -7,13 +7,15 @@ import materialui.components.appbar.enums.AppBarPosition
 import react.RBuilder
 import react.RComponent
 import react.RProps
-import react.RState
-import react.ReactElement
 import react.State
+import react.child
 import react.dom.RDOMBuilder
 import react.dom.attrs
 import react.dom.div
+import react.fc
+import react.functionalComponent
 import react.setState
+import showdown.web.ui.common.mySnackbar
 import showdown.web.ui.game.ShareDialogDataHolder
 import showdown.web.ui.game.shareDialog
 import showdown.web.wrapper.material.SettingsIcon
@@ -37,6 +39,37 @@ interface ToolbarProps : RProps {
     var gameModeId: Int
     var shareDialogDataHolder: ShareDialogDataHolder
 
+}
+
+val myToolbar2 = fc<RProps> {
+    div {
+        +"Hallo"
+    }
+}
+interface AppBarProps : RProps {
+    var startTimer: Boolean
+    var diffSecs: Double
+    var gameModeId: Int
+    var shareDialogDataHolder: ShareDialogDataHolder
+
+}
+
+val thisAppBar = fc<AppBarProps> {
+    appBar {
+        attrs {
+            position = AppBarPosition.static
+            color = AppBarColor.primary
+        }
+        div {
+            newGameButton { presenter.reset()}
+            showVotesButton { presenter.showVotes() }
+            settingsButton()
+            +"Estimation time: ${getTimerText()} seconds."
+            child(myToolbar2) {
+
+            }
+        }
+    }
 }
 
 private class Toolbar(props: ToolbarProps) : RComponent<ToolbarProps, ToolbarState>(props), ToolContract.View {
@@ -63,6 +96,7 @@ private class Toolbar(props: ToolbarProps) : RComponent<ToolbarProps, ToolbarSta
     }
 
     override fun RBuilder.render() {
+
         if (state.showShareDialog) {
             shareDialog(onCloseFunction = {
                 setState {
@@ -79,32 +113,19 @@ private class Toolbar(props: ToolbarProps) : RComponent<ToolbarProps, ToolbarSta
                 color = AppBarColor.primary
             }
             div {
-                newGameButton()
-                showVotesButton()
-                settingsButton()
+                newGameButton { presenter.reset()}
+                showVotesButton { presenter.showVotes() }
+                settingsButton{
+                    setState {
+                        this.showShareDialog = true
+                    }
+                }
                 +"Estimation time: ${getTimerText()} seconds."
+                child(myToolbar2) {
+
+                }
             }
         }
-    }
-
-    private fun RDOMBuilder<DIV>.newGameButton() {
-        toolbarButton("New Game", AddCircleIcon, onClick = {
-            presenter.reset()
-        })
-    }
-
-    private fun RDOMBuilder<DIV>.showVotesButton() {
-        toolbarButton("Show Votes", VisibilityIcon, onClick = {
-            presenter.showVotes()
-        })
-    }
-
-    private fun RDOMBuilder<DIV>.settingsButton() {
-        toolbarButton("Settings", SettingsIcon, onClick = {
-            setState {
-                this.showShareDialog = true
-            }
-        })
     }
 
     private fun getTimerText(): String {
@@ -115,9 +136,23 @@ private class Toolbar(props: ToolbarProps) : RComponent<ToolbarProps, ToolbarSta
         }
     }
 
-
+}
+private fun RDOMBuilder<DIV>.settingsButton(onClick: () -> Unit) {
+    toolbarButton("Settings", SettingsIcon, onClick = {
+        onClick()
+    })
+}
+private fun RDOMBuilder<DIV>.newGameButton(onClick: () -> Unit) {
+    toolbarButton("New Game", AddCircleIcon, onClick = {
+        onClick()
+    })
 }
 
+private fun RDOMBuilder<DIV>.showVotesButton(onClick: () -> Unit) {
+    toolbarButton("Show Votes", VisibilityIcon, onClick = {
+        onClick()
+    })
+}
 
 fun RBuilder.myToolbar(
     startTimer: Boolean,

@@ -66,13 +66,13 @@ dependencies {
     implementation 'com.badoo.reaktive:reaktive-js:1.2.0'
     implementation(npm('react', libs.react_version))
     implementation(npm('@material-ui/core', libs.material_ui_core))
-    implementation(npm('core-js', ''))
-    implementation(npm('react-qr-code', ''))
+    implementation(npm('core-js', '3.16.1'))
+    implementation(npm('react-qr-code', '2.0.1'))
     implementation(npm('@material-ui/icons', '4.11.2'))
     implementation(npm('inline-style-prefixer', ''))
     implementation(npm('uglifyjs-webpack-plugin', ''))
     implementation(npm('react-dom', libs.react_version))
-    testImplementation 'org.jetbrains.kotlin:kotlin-test-js'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test-js:1.5.21'
 
 }
 

@@ -2,9 +2,11 @@ package showdown.web.ui.game
 
 import de.jensklingenberg.showdown.model.Result
 import react.RBuilder
+import react.dom.attrs
 import react.dom.h2
 import react.dom.h3
 import react.dom.hr
+import react.dom.img
 import react.dom.p
 
 fun RBuilder.resultsList(results: List<Result>) {
@@ -12,6 +14,12 @@ fun RBuilder.resultsList(results: List<Result>) {
     if (results.isNotEmpty()) {
         h2 {
             +"Result:"
+        }
+
+        img {
+            attrs {
+                src = "https://media.giphy.com/media/3ov9kaW3wyiefU3GGA/giphy.gif"
+            }
         }
 
         h2 {
