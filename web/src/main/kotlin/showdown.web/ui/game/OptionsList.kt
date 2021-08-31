@@ -23,8 +23,8 @@ fun RBuilder.optionsList(options: List<String>, selectedOptionIndex: Int, onOpti
 
         button {
             attrs {
-                this.size = ButtonSize.large
-                this.color = if (index != selectedOptionIndex) {
+                size = ButtonSize.large
+                color = if (index != selectedOptionIndex) {
                     ButtonColor.primary
                 } else {
                     ButtonColor.secondary

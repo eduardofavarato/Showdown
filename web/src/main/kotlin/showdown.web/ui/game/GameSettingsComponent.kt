@@ -60,7 +60,7 @@ class GameSettingsComponent(prps: SettingsProps) : RComponent<SettingsProps, Set
                 attrs {
                     select = true
                     label { +"GameMode" }
-                    inputProps {}
+
                     value(state.gameModeId)
                     onChangeFunction = { event ->
                         val value = event.target.asDynamic().value

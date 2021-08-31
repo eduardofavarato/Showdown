@@ -7,7 +7,5 @@ interface ToolContract {
         fun changeConfig(gameModeId: Int, gameOptions: String)
     }
 
-    interface View {
 
-    }
 }
